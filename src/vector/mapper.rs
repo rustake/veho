@@ -1,5 +1,24 @@
 use std::ops::{Fn};
 
+trait Mapper<T> {
+    fn mapper<P, F: Fn(&T) -> P>(&self, f: F) -> Vec<P>;
+    fn iterate<F: Fn(&T)>(&self, f: F);
+    fn mutate<F: Fn(&T) -> T>(&mut self, f: F) -> &Vec<T>;
+}
+
+impl<T> Mapper<T> for Vec<T> {
+    fn mapper<P, F: Fn(&T) -> P>(&self, f: F) -> Vec<P> {
+        return self.into_iter().map(f).collect::<Vec<P>>();
+    }
+    fn iterate<F: Fn(&T)>(&self, f: F) {
+        for x in self.iter() { f(x); }
+    }
+    fn mutate<F: Fn(&T) -> T>(&mut self, f: F) -> &Vec<T> {
+        for x in self.iter_mut() { *x = f(x); }
+        return self;
+    }
+}
+
 pub fn mapper<T, P, F: Fn(&T) -> P>(vec: &Vec<T>, f: F) -> Vec<P> {
     return vec.into_iter().map(f).collect::<Vec<P>>();
 }
@@ -15,7 +34,15 @@ pub fn mutate<T, F: Fn(&T) -> T>(vec: &mut Vec<T>, f: F) -> &Vec<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::vector::mapper::{mapper, iterate, mutate};
+    use crate::vector::mapper::{mapper, iterate, mutate, Mapper};
+
+    #[test]
+    fn test_mapper_trait() {
+        let vec = vec![1, 2, 3];
+        println!("original: vec = {:?}", vec);
+        let vec = &vec.mapper(|x| x + 1);
+        println!("modified: vec = {:?}", vec);
+    }
 
     #[test]
     fn test_mapper() {
