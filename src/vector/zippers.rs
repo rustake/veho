@@ -8,7 +8,7 @@ pub fn zipper<A, B, T, F>(a: A, b: B, mut f: F) -> Vec<T>
         .collect::<Vec<T>>()
 }
 
-pub fn tri_zipper<A, B, C, T, F>(a: A, b: B, c: C, mut f: F) -> Vec<T>
+pub fn trizipper<A, B, C, T, F>(a: A, b: B, c: C, mut f: F) -> Vec<T>
     where A: IntoIterator,
           B: IntoIterator,
           C: IntoIterator,
@@ -19,7 +19,7 @@ pub fn tri_zipper<A, B, C, T, F>(a: A, b: B, c: C, mut f: F) -> Vec<T>
         .collect::<Vec<T>>()
 }
 
-pub fn quo_zipper<A, B, C, D, T, F>(a: A, b: B, c: C, d: D, mut f: F) -> Vec<T>
+pub fn quazipper<A, B, C, D, T, F>(a: A, b: B, c: C, d: D, mut f: F) -> Vec<T>
     where A: IntoIterator,
           B: IntoIterator,
           C: IntoIterator,
@@ -33,7 +33,7 @@ pub fn quo_zipper<A, B, C, D, T, F>(a: A, b: B, c: C, d: D, mut f: F) -> Vec<T>
 
 #[cfg(test)]
 mod tests {
-    use crate::iterable::zipper::{zipper, tri_zipper, quo_zipper};
+    use crate::vector::{zipper, trizipper, quazipper};
 
     #[test]
     fn test_duo_zipper() {
@@ -46,11 +46,24 @@ mod tests {
     }
 
     #[test]
+    fn test_mut_zipper() {
+        let mut a = vec![1, 2, 3];
+        let b = vec![2, 4, 8];
+        let v = zipper(&mut a, &b, |a, b| {
+            *a *= b;
+            return *a;
+        });
+        println!("a = {:?}", a);
+        println!("b = {:?}", b);
+        println!("v = {:?}", v);
+    }
+
+    #[test]
     fn test_tri_zipper() {
         let mut a = vec![1, 2, 3];
         let b = vec![2, 4, 8];
         let c = vec![1, 10, 100];
-        let v = tri_zipper(&mut a, &b, &c, |a, b, c| *a *= b * c);
+        let v = trizipper(&mut a, &b, &c, |a, b, c| *a *= b * c);
         println!("a = {:?}", a);
         println!("b = {:?}", b);
         println!("c = {:?}", c);
@@ -58,13 +71,13 @@ mod tests {
     }
 
     #[test]
-    fn test_quo_zipper() {
+    fn test_qua_zipper() {
         let mut a = vec![0, 0, 0];
         let b = vec![5, 25, 125];
         let c = vec![1, 3, 7];
         let d = vec![1, 1, 1];
-        let v = quo_zipper(&mut a, &b, &c, &d,
-                           |xa, xb, xc, xd| *xa += xb * (xc + xd),
+        let v = quazipper(&mut a, &b, &c, &d,
+                          |xa, xb, xc, xd| *xa += xb * (xc + xd),
         );
         println!("a = {:?}", a);
         println!("v = {:?}", v);

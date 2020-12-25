@@ -1,2 +1,0 @@
-mod alpha_zip_test_not_worked;
-mod beta_zip_test_not_worked;

@@ -1,2 +1,2 @@
 pub mod init;
-pub mod mapper;
+pub mod mappers;

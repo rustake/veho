@@ -31,7 +31,7 @@ pub fn quo_zipper<A, B, C, D, P, F: FnMut(&A, &B, &C, &D) -> P>
 
 #[cfg(test)]
 mod tests {
-    use crate::vector::zipper::{zipper, tri_zipper, quo_zipper};
+    use crate::vector::zippers::{zipper, tri_zipper, quo_zipper};
 
     #[test]
     fn test_zipper() {

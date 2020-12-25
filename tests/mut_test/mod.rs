@@ -1,3 +1,0 @@
-mod simplest_for_loop_mut_test_worked;
-mod alpha_mut_test_not_worked;
-mod simplest_iter_mut_test_worked;

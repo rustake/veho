@@ -1,17 +1,5 @@
-use std::ops::{Fn};
-use crate::matrix::alias::Matrix;
-
-// trait Mapper<P, F: Fn(&T) -> P> {
-//     fn mapper(&self, f: F) -> Matrix<P>;
-// }
-//
-// impl<T, P, F: Fn(&T) -> P> Mapper<T, P, F> for Matrix<P> {
-//     fn mapper(&self, f: F) -> Matrix<P> {
-//         return self.into_iter().map(
-//             |row| row.into_iter().map(|x| f(x)).collect()
-//         ).collect();
-//     }
-// }
+// use std::ops::{Fn};
+use crate::matrix::Matrix;
 
 pub fn mapper<T, P, F: Fn(&T) -> P>(matrix: &Matrix<T>, f: F) -> Matrix<P> {
     return matrix.into_iter().map(
@@ -38,9 +26,9 @@ pub fn mutate<T, F: Fn(&T) -> T>(matrix: &mut Matrix<T>, f: F) -> &Matrix<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::mapper::{iterate, mutate, mapper};
+    use crate::matrix::mappers::{iterate, mutate, mapper};
     use crate::matrix::alias::Matrix;
-    use crate::matrix::init::init;
+    use crate::matrix::inits::init;
 
 
     fn create_matrix() -> Matrix<i32> {
