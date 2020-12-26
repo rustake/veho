@@ -5,31 +5,32 @@ use std::slice::IterMut;
 pub trait Mappers<R>: IntoIterator<Item=R>
     where R: IntoIterator
 {
-    fn mapper<P, F>(self, f: F) -> Matrix<P> where
+    fn mapper<P, F>(self, mut f: F) -> Matrix<P> where
         Self: Sized,
-        F: Fn(R::Item) -> P,
+        F: FnMut(R::Item) -> P,
+    // F: FnMut(<R as IntoIterator>::Item) -> P,
     {
         return self.into_iter().map(
             |row| row.into_iter().map(
-                &f
+                |x| f(x)
             ).collect()
         ).collect();
     }
 
-    fn iterate<F>(self, f: F) where
+    fn iterate<F>(self, mut f: F) where
         Self: Sized,
-        F: Fn(R::Item)
+        F: FnMut(R::Item)
     {
         self.into_iter().for_each(
             |row| row.into_iter().for_each(
-                &f
+                |x| f(x)
             )
         )
     }
 
-    fn indexed_mapper<P, F>(self, f: F) -> Matrix<P> where
+    fn indexed_mapper<P, F>(self, mut f: F) -> Matrix<P> where
         Self: Sized,
-        F: Fn(usize, usize, R::Item) -> P,
+        F: FnMut(usize, usize, R::Item) -> P,
     {
         return self.into_iter().enumerate().map(
             |(i, row)| row.into_iter().enumerate().map(
@@ -38,9 +39,9 @@ pub trait Mappers<R>: IntoIterator<Item=R>
         ).collect();
     }
 
-    fn indexed_iterate<F>(self, f: F) where
+    fn indexed_iterate<F>(self, mut f: F) where
         Self: Sized,
-        F: Fn(usize, usize, R::Item)
+        F: FnMut(usize, usize, R::Item)
     {
         self.into_iter().enumerate().for_each(
             |(i, row)| row.into_iter().enumerate().for_each(
@@ -92,13 +93,13 @@ impl<'a, R, M: ?Sized> Mutaters<'a, R> for M where
 pub fn mapper<M, R, P, F>(mx: M, f: F) -> Matrix<P> where
     R: IntoIterator,
     M: IntoIterator<Item=R>,
-    F: Fn(R::Item) -> P,
+    F: FnMut(R::Item) -> P,
 { mx.mapper(f) }
 
 pub fn iterate<M, R, F>(mx: M, f: F) where
     R: IntoIterator,
     M: IntoIterator<Item=R>,
-    F: Fn(R::Item)
+    F: FnMut(R::Item)
 { mx.iterate(f) }
 
 pub fn mutate<'a, R, M, F>(mx: M, f: F) where
@@ -111,13 +112,13 @@ pub fn mutate<'a, R, M, F>(mx: M, f: F) where
 pub fn indexed_mapper<M, R, P, F>(mx: M, f: F) -> Matrix<P> where
     R: IntoIterator,
     M: IntoIterator<Item=R>,
-    F: Fn(usize, usize, R::Item) -> P,
+    F: FnMut(usize, usize, R::Item) -> P,
 { mx.indexed_mapper(f) }
 
 pub fn indexed_iterate<M, R, F>(mx: M, f: F) where
     R: IntoIterator,
     M: IntoIterator<Item=R>,
-    F: Fn(usize, usize, R::Item)
+    F: FnMut(usize, usize, R::Item)
 { mx.indexed_iterate(f) }
 
 pub fn indexed_mutate<'a, R, M, F>(mx: M, f: F) where
@@ -161,7 +162,11 @@ mod tests_mappers {
             vec![2, 2, 2],
             vec![3, 3, 3]
         ];
-        (&mut mx).iterate(|x| *x += 1);
+        let mut text = "_".to_owned();
+        (&mut mx).iterate(|x| {
+            &mut text.push_str(&format!("#{:0>6X}", x));
+            *x += 1
+        });
         println!("{:?}", mx);
     }
 
