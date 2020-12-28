@@ -1,8 +1,9 @@
 [package]
 name = "veho"
 description = "a iterable toolset"
-version = "0.0.4"
+version = "0.0.5"
 authors = ["Hoyeung Wong <hoyeungw@outlook.com>"]
+readme = "README.md"
 edition = "2018"
 license = "MIT"
 
