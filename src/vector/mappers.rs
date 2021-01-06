@@ -4,7 +4,7 @@ pub trait Mappers: IntoIterator {
     fn mapper<F, T>(self, f: F) -> Vec<T> where
         Self: Sized,
         F: FnMut(Self::Item) -> T
-    { return self.into_iter().map(f).collect::<Vec<T>>(); }
+    { self.into_iter().map(f).collect::<Vec<T>>() }
 
     fn iterate<F>(self, mut f: F) where
         Self: Sized,
@@ -19,7 +19,7 @@ pub trait Mappers: IntoIterator {
     fn indexed_mapper<F, T>(self, mut f: F) -> Vec<T> where
         Self: Sized,
         F: FnMut(usize, Self::Item) -> T
-    { return self.into_iter().enumerate().map(|(i, x)| f(i, x)).collect::<Vec<T>>(); }
+    { self.into_iter().enumerate().map(|(i, x)| f(i, x)).collect::<Vec<T>>() }
 
     fn indexed_iterate<F>(self, mut f: F) where
         Self: Sized,
@@ -52,7 +52,7 @@ pub fn mutate<'a, T: 'a, I, F>(it: I, f: F) where
 pub fn indexed_mapper<I, F, T>(it: I, f: F) -> Vec<T> where
     I: IntoIterator,
     F: FnMut(usize, I::Item) -> T
-{ return it.indexed_mapper(f); }
+{ it.indexed_mapper(f) }
 
 pub fn indexed_iterate<I, F>(it: I, f: F) where
     I: IntoIterator,
@@ -66,16 +66,18 @@ pub fn indexed_mutate<'a, T: 'a, I, F>(it: I, f: F) where
 
 #[cfg(test)]
 mod mappers_tests {
+    use crate::vector::{iterate, mapper, mutate};
+
     use super::Mappers;
-    use crate::vector::{mapper, iterate, mutate};
 
     #[test]
     fn test_mapper() {
-        let vec = vec![1, 2, 3];
-        println!("original: vec = {:?}", vec);
-        let vec = vec.mapper(|x| x + 1);
+        let original: Vec<i32> = vec![1, 2, 3];
+        println!("original: vec = {:?}", original);
+        let mapped = (&original).mapper(|x| x + 1);
         // let vec = mapper(vec.iter().into_iter(), |x| x + 1);
-        println!("modified: vec = {:?}", vec);
+        println!("modified: vec = {:?}", mapped);
+        println!("original: vec = {:?}", original);
     }
 
     #[test]
@@ -114,8 +116,9 @@ mod mappers_tests {
     fn test_mapper_func() {
         let vec = [1, 2, 3];
         println!("original: vec = {:?}", vec);
-        let vec = mapper(&vec, |x| x + 1);
-        println!("modified: vec = {:?}", vec);
+        let vec2 = mapper(&vec, |x| x + 1);
+        println!("modified: vec2 = {:?}", vec2);
+        println!("original: vec = {:?}", vec);
     }
 
     #[test]
@@ -163,7 +166,7 @@ mod indexed_mappers_tests {
 
 #[cfg(test)]
 mod indexed_mappers_func_tests {
-    use crate::vector::mappers::{indexed_mutate, indexed_iterate, indexed_mapper};
+    use crate::vector::mappers::{indexed_iterate, indexed_mapper, indexed_mutate};
 
     #[test]
     fn test_mapper() {

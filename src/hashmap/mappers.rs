@@ -81,20 +81,21 @@ pub fn iterate_value<K, V, MP, F>(kvp: MP, f: F) where
 
 #[cfg(test)]
 mod hashmap_mappers_tests {
-    use crate::hashmap::init::tuples_to_hashmap;
+    use crate::hashmap::Init;
     use crate::hashmap::mappers::Mappers;
 
     #[test]
     fn test_mapper() {
-        let dict = tuples_to_hashmap(vec![("foo", 1), ("bar", 2), ("zen", 3)]);
-        println!("{:?}", dict);
-        let dict = dict.mapper(|k, v| (k, v + 1));
-        println!("{:?}", dict);
+        let alpha = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
+        println!("alpha = {:?}", alpha);
+        let beta = (&alpha).mapper(|k, v| (k, v + 1));
+        println!("beta = {:?}", beta);
+        println!("alpha = {:?}", alpha);
     }
 
     #[test]
     fn test_iterate_mutate() {
-        let mut dict = tuples_to_hashmap(vec![("foo", 1), ("bar", 2), ("zen", 3)]);
+        let mut dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
         println!("{:?}", dict);
         (&mut dict).iterate(|_, v| { *v += 1; });
         println!("{:?}", dict);
@@ -102,7 +103,7 @@ mod hashmap_mappers_tests {
 
     #[test]
     fn test_mapper_value() {
-        let dict = tuples_to_hashmap(vec![("foo", 1), ("bar", 2), ("zen", 3)]);
+        let dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
         println!("{:?}", dict);
         let dict = dict.mapper_value(|v| v + 1);
         println!("{:?}", dict);
@@ -110,7 +111,7 @@ mod hashmap_mappers_tests {
 
     #[test]
     fn test_iterate_value() {
-        let mut dict = tuples_to_hashmap(vec![("foo", 1), ("bar", 2), ("zen", 3)]);
+        let mut dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
         println!("{:?}", dict);
         (&mut dict).iterate_value(|v| { *v += 1; });
         println!("{:?}", dict);
@@ -119,20 +120,20 @@ mod hashmap_mappers_tests {
 
 #[cfg(test)]
 mod hashmap_mappers_func_tests {
-    use crate::hashmap::{iterate, iterate_value, mapper, mapper_value};
-    use crate::hashmap::init::tuples_to_hashmap;
+    use crate::hashmap::{Init, iterate, iterate_value, mapper, mapper_value};
 
     #[test]
     fn test_mapper() {
-        let dict = tuples_to_hashmap(vec![("foo", 1), ("bar", 2), ("zen", 3)]);
-        println!("{:?}", dict);
-        let dict = mapper(dict, |k, v| (k, v + 1));
-        println!("{:?}", dict);
+        let alpha = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
+        println!("alpha = {:?}", alpha);
+        let beta = mapper(&alpha, |k, v| (k, v + 1));
+        println!("beta = {:?}", beta);
+        println!("alpha = {:?}", alpha);
     }
 
     #[test]
     fn test_iterate_mutate() {
-        let mut dict = tuples_to_hashmap(vec![("foo", 1), ("bar", 2), ("zen", 3)]);
+        let mut dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
         println!("{:?}", dict);
         iterate(&mut dict, |_, v| { *v += 1; });
         println!("{:?}", dict);
@@ -140,7 +141,7 @@ mod hashmap_mappers_func_tests {
 
     #[test]
     fn test_mapper_value() {
-        let dict = tuples_to_hashmap(vec![("foo", 1), ("bar", 2), ("zen", 3)]);
+        let dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
         println!("{:?}", dict);
         let dict = mapper_value(dict, |v| v + 1);
         println!("{:?}", dict);
@@ -148,7 +149,7 @@ mod hashmap_mappers_func_tests {
 
     #[test]
     fn test_iterate_value() {
-        let mut dict = tuples_to_hashmap(vec![("foo", 1), ("bar", 2), ("zen", 3)]);
+        let mut dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
         println!("{:?}", dict);
         iterate_value(&mut dict, |v| { *v += 1; });
         println!("{:?}", dict);

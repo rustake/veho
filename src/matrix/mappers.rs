@@ -1,6 +1,6 @@
-use crate::matrix::Matrix;
 use std::slice::IterMut;
 
+use crate::matrix::Matrix;
 
 pub trait Mappers<R>: IntoIterator<Item=R>
     where R: IntoIterator
@@ -10,11 +10,11 @@ pub trait Mappers<R>: IntoIterator<Item=R>
         F: FnMut(R::Item) -> P,
     // F: FnMut(<R as IntoIterator>::Item) -> P,
     {
-        return self.into_iter().map(
+        self.into_iter().map(
             |row| row.into_iter().map(
                 |x| f(x)
             ).collect()
-        ).collect();
+        ).collect()
     }
 
     fn iterate<F>(self, mut f: F) where
@@ -32,11 +32,11 @@ pub trait Mappers<R>: IntoIterator<Item=R>
         Self: Sized,
         F: FnMut(usize, usize, R::Item) -> P,
     {
-        return self.into_iter().enumerate().map(
+        self.into_iter().enumerate().map(
             |(i, row)| row.into_iter().enumerate().map(
                 |(j, v)| f(i, j, v)
             ).collect()
-        ).collect();
+        ).collect()
     }
 
     fn indexed_iterate<F>(self, mut f: F) where
@@ -194,7 +194,7 @@ mod tests_mappers {
 
 #[cfg(test)]
 mod tests_mutaters {
-    use crate::matrix::{Mutaters, mutate};
+    use crate::matrix::{mutate, Mutaters};
 
     #[test]
     fn test_vec_mutate() {

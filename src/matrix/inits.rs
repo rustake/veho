@@ -1,15 +1,15 @@
 use crate::matrix::Matrix;
 
 pub fn init<T, F: Fn(usize, usize) -> T>(height: usize, width: usize, f: F) -> Matrix<T> {
-    return (0..height).map(
+    (0..height).map(
         |i| (0..width).map(
             |j| f(i, j)
         ).collect()
-    ).collect();
+    ).collect()
 }
 
 pub fn iso<T: Clone>(height: usize, width: usize, value: T) -> Matrix<T> {
-    return vec![vec![value; width]; height];
+    vec![vec![value; width]; height]
 }
 
 #[cfg(test)]
