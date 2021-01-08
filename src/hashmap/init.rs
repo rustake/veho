@@ -28,11 +28,21 @@ mod test {
     use crate::hashmap::init::init_to_hashmap;
 
     #[test]
-    fn test() {
+    fn test_vec() {
         let tuples = vec![("one", [1]), ("two", [2]), ("three", [3])];
         let beta = init_to_hashmap(tuples.clone());
         let alpha = (tuples).into_hashmap();
         println!("{:?}", alpha);
         println!("{:?}", beta);
+    }
+
+    #[test]
+    fn test_arr() {
+        let tuples = [("one", [1]), ("two", [2]), ("three", [3])];
+        let cloned_tuples = (&tuples).clone();
+        // let beta = init_to_hashmap(cloned_tuples.iter());
+        let alpha = tuples.iter().into_hashmap();
+        println!("{:?}", alpha);
+        // println!("{:?}", beta);
     }
 }

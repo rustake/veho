@@ -30,8 +30,17 @@ mod test {
     use crate::hashmap::cloner::Cloner;
 
     #[test]
-    fn test() {
+    fn test_vec() {
         let tuples = vec![("one", [1]), ("two", [2]), ("three", [3])];
+        let beta = (&tuples).into_hashmap();
+        let alpha = (tuples).into_hashmap();
+        println!("{:?}", alpha);
+        println!("{:?}", beta);
+    }
+
+    #[test]
+    fn test_arr() {
+        let tuples = [("one", [1]), ("two", [2]), ("three", [3])];
         let beta = (&tuples).into_hashmap();
         let alpha = (tuples).into_hashmap();
         println!("{:?}", alpha);
