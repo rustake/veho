@@ -1,10 +1,10 @@
 use std::hash::Hash;
 
-pub use move_unwind::MoveUnwind;
-pub use ref_unwind::RefUnwind;
+pub use move_unwinds::MoveUnwind;
+pub use ref_unwinds::RefUnwind;
 
-pub mod move_unwind;
-pub mod ref_unwind;
+pub mod move_unwinds;
+pub mod ref_unwinds;
 
 
 pub fn move_unwind<K, V, KVS>(kvs: KVS) -> (Vec<K>, Vec<V>) where
