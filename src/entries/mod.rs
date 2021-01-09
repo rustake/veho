@@ -1,4 +1,4 @@
-pub use unwinds::{clone_to_hashmap, into_hashmap, MoveUnwind, ref_to_hashmap, RefUnwind};
+pub use unwinds::{clone_unwind, move_unwind, MoveUnwind, ref_unwind, RefUnwind};
 
 mod unwinds;
 

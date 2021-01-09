@@ -1,14 +1,11 @@
-use std::collections::HashMap;
 use std::hash::Hash;
 
 pub trait MoveUnwind<K, V>: IntoIterator<Item=(K, V)> where
     K: Hash + Eq,
 {
-    fn into_hashmap(self) -> HashMap<K, V> where
+    fn move_unwind(self) -> (Vec<K>, Vec<V>) where
         Self: Sized
-    {
-        self.into_iter().collect::<HashMap<K, V>>()
-    }
+    { self.into_iter().unzip() }
 }
 
 impl<K, V, KVS: ?Sized> MoveUnwind<K, V> for KVS where
@@ -16,29 +13,20 @@ impl<K, V, KVS: ?Sized> MoveUnwind<K, V> for KVS where
     KVS: IntoIterator<Item=(K, V)> {}
 
 
-
-
 #[cfg(test)]
 mod test {
-    use crate::hashmap::RefInit;
-
     use super::*;
 
     #[test]
-    fn test_vec() {
-        let tuples = vec![("one", [1]), ("two", [2]), ("three", [3])];
-        let beta = into_hashmap(tuples.clone());
-        let alpha = (tuples).clone_to_hashmap();
-        println!("{:?}", alpha);
-        println!("{:?}", beta);
-    }
-
-    #[test]
-    fn test_arr() {
-        let tuples = [("one", [1]), ("two", [2]), ("three", [3])];
-        // let beta = init_to_hashmap(tuples);
-        let alpha = (tuples).clone_to_hashmap();
-        println!("{:?}", alpha);
-        // println!("{:?}", beta);
+    fn test_move_unwind() {
+        let tuples = vec![
+            (1, 10.0),
+            (2, 20.0),
+            (3, 30.0),
+        ];
+        let (a, b) = tuples.move_unwind();
+        println!("{:?}", a);
+        println!("{:?}", b);
+        // println!("{:?}", tuples);
     }
 }
