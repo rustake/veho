@@ -5,3 +5,5 @@ mod izip_test;
 mod beta_zip_test;
 mod mut_test;
 mod zip_test;
+mod unwind_test;
+mod init_test;

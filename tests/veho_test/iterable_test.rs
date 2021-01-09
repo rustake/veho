@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod iterable_test {
-    use veho::iterable::{mapper, zipper};
+    use veho::vector::{mapper, zipper};
 
     #[test]
     fn mapper_test() {

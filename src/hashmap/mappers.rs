@@ -40,48 +40,48 @@ impl<K, V, KVS: ?Sized> Mappers<K, V> for KVS where
     K: Hash + Eq,
     KVS: IntoIterator<Item=(K, V)> {}
 
-pub fn mapper<K, V, MP, KT, VT, F>(kvp: MP, f: F) -> HashMap<KT, VT> where
+pub fn mapper<K, V, KVS, KT, VT, F>(kvp: KVS, f: F) -> HashMap<KT, VT> where
     K: Hash + Eq,
-    MP: IntoIterator<Item=(K, V)>,
+    KVS: IntoIterator<Item=(K, V)>,
     F: FnMut(K, V) -> (KT, VT),
     KT: Hash + Eq
 { kvp.mapper(f) }
 
-pub fn iterate<K, V, MP, F>(kvp: MP, f: F) where
+pub fn iterate<K, V, KVS, F>(kvp: KVS, f: F) where
     K: Hash + Eq,
-    MP: IntoIterator<Item=(K, V)>,
+    KVS: IntoIterator<Item=(K, V)>,
     F: FnMut(K, V)
 { kvp.iterate(f) }
 
-pub fn mapper_key<K, V, MP, KT, F>(kvp: MP, f: F) -> HashMap<KT, V> where
+pub fn mapper_key<K, V, KVS, KT, F>(kvp: KVS, f: F) -> HashMap<KT, V> where
     K: Hash + Eq,
-    MP: IntoIterator<Item=(K, V)>,
+    KVS: IntoIterator<Item=(K, V)>,
     F: FnMut(K) -> KT,
     KT: Hash + Eq
 { kvp.mapper_key(f) }
 
-pub fn iterate_key<K, V, MP, F>(kvp: MP, f: F) where
+pub fn iterate_key<K, V, KVS, F>(kvp: KVS, f: F) where
     K: Hash + Eq,
-    MP: IntoIterator<Item=(K, V)>,
+    KVS: IntoIterator<Item=(K, V)>,
     F: FnMut(K)
 { kvp.iterate_key(f) }
 
-pub fn mapper_value<K, V, MP, VT, F>(kvp: MP, f: F) -> HashMap<K, VT> where
+pub fn mapper_value<K, V, KVS, VT, F>(kvp: KVS, f: F) -> HashMap<K, VT> where
     K: Hash + Eq,
-    MP: IntoIterator<Item=(K, V)>,
+    KVS: IntoIterator<Item=(K, V)>,
     F: FnMut(V) -> VT,
 { kvp.mapper_value(f) }
 
-pub fn iterate_value<K, V, MP, F>(kvp: MP, f: F) where
+pub fn iterate_value<K, V, KVS, F>(kvp: KVS, f: F) where
     K: Hash + Eq,
-    MP: IntoIterator<Item=(K, V)>,
+    KVS: IntoIterator<Item=(K, V)>,
     F: FnMut(V)
 { kvp.iterate_value(f) }
 
 
 #[cfg(test)]
 mod hashmap_mappers_tests {
-    use crate::hashmap::Init;
+    use crate::hashmap::MoveInit;
     use crate::hashmap::mappers::Mappers;
 
     #[test]
@@ -120,7 +120,7 @@ mod hashmap_mappers_tests {
 
 #[cfg(test)]
 mod hashmap_mappers_func_tests {
-    use crate::hashmap::{Init, iterate, iterate_value, mapper, mapper_value};
+    use crate::hashmap::{MoveInit, iterate, iterate_value, mapper, mapper_value};
 
     #[test]
     fn test_mapper() {

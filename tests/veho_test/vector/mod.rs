@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use veho::vector::{mapper, iterate, mutate, Mapper};
+    use veho::vector::{iterate, mapper, mutate, Mappers};
 
     #[test]
     fn test_mapper_trait() {
@@ -21,14 +21,14 @@ mod tests {
     #[test]
     fn test_iterate() {
         let mut vec = vec![1, 2, 3];
-        iterate(&mut vec, |x| println!("{}", x + 1));
+        iterate(&mut vec, |x| println!("{}", *x + 1));
     }
 
     #[test]
     fn test_mutate() {
         let mut vec = vec![1, 2, 3];
         println!("original: vec = {:?}", vec);
-        mutate(&mut vec, |x| x * 2);
+        mutate(&mut vec, |x| *x *= 2);
         println!("modified: vec = {:?}", vec);
     }
 }
