@@ -1,7 +1,6 @@
 use std::hash::Hash;
 
 pub trait Unwinds<K, V>: IntoIterator<Item=(K, V)> where
-    Self::Item: K,
     Self: Sized,
     K: Hash + Eq
 {
@@ -43,7 +42,7 @@ mod test {
             (2, 20.0),
             (3, 30.0),
         ];
-        let (a, b) = move_unwind((&tuples).into_iter());
+        let (a, b) = move_unwind(tuples);
         println!("{:?}", a);
         println!("{:?}", b);
         // println!("{:?}", tuples);

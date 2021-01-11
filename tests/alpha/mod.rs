@@ -7,3 +7,4 @@ mod mut_test;
 mod zip_test;
 mod unwind_test;
 mod init_test;
+mod mutaters_test;

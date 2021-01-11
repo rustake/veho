@@ -1,11 +1,12 @@
 use std::slice::IterMut;
 
-pub trait Mutaters<'a, R>: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>>
-    where R: 'a + IntoIterator
+pub trait Mutaters<'a, R>: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>> where
+    Self::Item: IntoIterator<Item=&'a mut R::Item, IntoIter=IterMut<'a, R::Item>>,
+    R: 'a + IntoIterator,
 {
     fn mutate<F>(self, mut f: F) where
-        Self: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>> + Sized,
-        Self::Item: IntoIterator<Item=&'a mut R::Item, IntoIter=IterMut<'a, R::Item>> + Sized,
+        Self: Sized,
+        R: Sized,
         F: FnMut(&mut R::Item) -> ()
     {
         for row in &mut self.into_iter() {
@@ -16,8 +17,8 @@ pub trait Mutaters<'a, R>: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>>
     }
 
     fn indexed_mutate<F>(self, mut f: F) where
-        Self: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>> + Sized,
-        Self::Item: IntoIterator<Item=&'a mut R::Item, IntoIter=IterMut<'a, R::Item>> + Sized,
+        Self: Sized,
+        R: Sized,
         F: FnMut(usize, usize, &mut R::Item) -> ()
     {
         for (i, row) in &mut self.into_iter().enumerate() {

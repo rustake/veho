@@ -28,8 +28,8 @@ mod test_clone_unwind {
     #[test]
     fn test_vec() {
         let tuples = vec![("one", [1]), ("two", [2]), ("three", [3])];
-        let beta = (&tuples).clone_unwind();
         let alpha = (tuples).clone_unwind();
+        let beta = (&tuples).clone_unwind();
         println!("{:?}", alpha);
         println!("{:?}", beta);
     }
@@ -37,8 +37,8 @@ mod test_clone_unwind {
     #[test]
     fn test_arr() {
         let tuples = [("one", [1]), ("two", [2]), ("three", [3])];
-        let beta = (&tuples).clone_unwind();
         let alpha = (tuples).clone_unwind();
+        let beta = (&tuples).clone_unwind();
         println!("{:?}", alpha);
         println!("{:?}", beta);
     }
