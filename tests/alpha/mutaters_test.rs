@@ -1,34 +1,41 @@
 use std::slice::IterMut;
 
-pub trait Mutaters<'a, T, R>: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>> where
-    T: 'a,
-    R: 'a + IntoIterator<Item=&'a mut T, IntoIter=IterMut<'a, T>>,
+use veho::matrix::Matrix;
+
+pub fn zipper<RA, RB, MA, MB, T, F>(a: MA, b: MB, mut f: F) -> Matrix<T>
+    where RA: IntoIterator,
+          RB: IntoIterator,
+          MA: IntoIterator<Item=RA>,
+          MB: IntoIterator<Item=RB>,
+          F: FnMut(RA::Item, RB::Item) -> T
+{
+    a.into_iter().zip(b).map(
+        |(ra, rb)| ra.into_iter().zip(rb).map(
+            |(a, b)| f(a, b)
+        ).collect::<Vec<T>>()
+    ).collect::<Matrix<T>>()
+}
+
+pub trait Mutaters<R>: IntoIterator<Item=R> where
+    R: IntoIterator,
 {
     fn mutate<F>(self, mut f: F) where
         Self: Sized,
         R: Sized,
-        F: FnMut(&mut T) -> ()
+        F: FnMut(R::Item) -> ()
     {
-        for row in &mut self.into_iter() {
-            for x in &mut row.into_iter() {
-                &f(x);
+        for row in self.into_iter() {
+            for x in row.into_iter() {
+                f(x);
             }
         }
     }
 }
 
-impl<'a, T, R, M: ?Sized> Mutaters<'a, T, R> for M where
-    T: 'a,
-    R: 'a + IntoIterator<Item=&'a mut T, IntoIter=IterMut<'a, T>>,
-    M: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>>,
+impl<R, M: ?Sized> Mutaters<R> for M where
+    R: IntoIterator,
+    M: IntoIterator<Item=R>,
 {}
-
-// impl<'a, T, R, M: ?Sized> Mutaters<'a, T, R> for M where
-//     T: 'a,
-//     R: IntoIterator + 'a,
-//     M: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>>,
-//     M::Item: IntoIterator<Item=&'a mut R::Item, IntoIter=IterMut<'a, T>>,
-// {}
 
 #[cfg(test)]
 mod tests_mutaters {
@@ -45,4 +52,5 @@ mod tests_mutaters {
         (&mut mx).mutate(|x| *x += 1);
         println!("{:?}", mx);
     }
+
 }
