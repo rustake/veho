@@ -1,7 +1,5 @@
-use std::hash::Hash;
-
 pub trait RefUnwind<'a, K, V>: IntoIterator<Item=&'a (K, V)> where
-    K: 'a + Hash + Eq,
+    K: 'a,
     V: 'a,
 {
     fn ref_unwind(self) -> (Vec<&'a K>, Vec<&'a V>) where
@@ -16,7 +14,7 @@ pub trait RefUnwind<'a, K, V>: IntoIterator<Item=&'a (K, V)> where
 }
 
 impl<'a, K, V, KVS: ?Sized> RefUnwind<'a, K, V> for KVS where
-    K: 'a + Hash + Eq,
+    K: 'a,
     V: 'a,
     KVS: IntoIterator<Item=&'a (K, V)> {}
 

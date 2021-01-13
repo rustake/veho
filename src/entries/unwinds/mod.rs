@@ -1,5 +1,3 @@
-use std::hash::Hash;
-
 pub use move_unwinds::MoveUnwind;
 pub use ref_unwinds::RefUnwind;
 
@@ -8,18 +6,17 @@ pub mod ref_unwinds;
 
 
 pub fn move_unwind<K, V, KVS>(kvs: KVS) -> (Vec<K>, Vec<V>) where
-    K: Hash + Eq,
     KVS: IntoIterator<Item=(K, V)>
 { kvs.move_unwind() }
 
 pub fn ref_unwind<'a, K, V, KVS>(kvs: KVS) -> (Vec<&'a K>, Vec<&'a V>) where
-    K: 'a + Hash + Eq,
+    K: 'a,
     V: 'a,
     KVS: IntoIterator<Item=&'a (K, V)>
 { kvs.ref_unwind() }
 
 pub fn clone_unwind<'a, K, V, KVS>(kvs: KVS) -> (Vec<K>, Vec<V>) where
-    K: 'a + Hash + Eq + Clone,
+    K: 'a + Clone,
     V: 'a + Clone,
     KVS: IntoIterator<Item=&'a (K, V)>
 { kvs.clone_unwind() }

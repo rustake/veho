@@ -1,7 +1,4 @@
-use std::hash::Hash;
-
-pub trait MoveUnwind<K, V>: IntoIterator<Item=(K, V)> where
-    K: Hash + Eq,
+pub trait MoveUnwind<K, V>: IntoIterator<Item=(K, V)>
 {
     fn move_unwind(self) -> (Vec<K>, Vec<V>) where
         Self: Sized
@@ -9,7 +6,6 @@ pub trait MoveUnwind<K, V>: IntoIterator<Item=(K, V)> where
 }
 
 impl<K, V, KVS: ?Sized> MoveUnwind<K, V> for KVS where
-    K: Hash + Eq,
     KVS: IntoIterator<Item=(K, V)> {}
 
 
