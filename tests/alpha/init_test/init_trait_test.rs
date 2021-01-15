@@ -33,7 +33,7 @@ impl<K, V, I> Unwinds<K, V> for I where
 
 #[cfg(test)]
 mod test {
-    use veho::entries::move_unwind;
+    use veho::entries::unwind;
 
     #[test]
     fn test_move_unwind() {
@@ -42,7 +42,7 @@ mod test {
             (2, 20.0),
             (3, 30.0),
         ];
-        let (a, b) = move_unwind(tuples);
+        let (a, b) = unwind(tuples);
         println!("{:?}", a);
         println!("{:?}", b);
         // println!("{:?}", tuples);

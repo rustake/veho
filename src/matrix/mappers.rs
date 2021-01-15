@@ -1,5 +1,9 @@
 use crate::matrix::Matrix;
 
+// trait MatrixTrait<T> =
+// IntoIterator where
+// Self::Item: IntoIterator;
+
 pub trait Mappers<R>: IntoIterator<Item=R>
     where R: IntoIterator
 {

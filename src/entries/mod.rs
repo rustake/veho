@@ -1,4 +1,5 @@
-pub use unwinds::{clone_unwind, move_unwind, MoveUnwind, ref_unwind, RefUnwind};
+pub use unwinds::{unwind, Unwinds};
 
+pub mod reference;
 mod unwinds;
 
