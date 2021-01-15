@@ -1,4 +1,4 @@
-use veho::hashmap::MoveInit;
+use veho::hashmap::IntoHashmap;
 use veho::entries::unwind;
 
 fn ref_unwind<'a, K, V, KVS>(it: KVS) -> (Vec<&'a K>, Vec<&'a V>) where

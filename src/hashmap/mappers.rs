@@ -81,7 +81,7 @@ pub fn iterate_value<K, V, KVS, F>(kvp: KVS, f: F) where
 
 #[cfg(test)]
 mod hashmap_mappers_tests {
-    use crate::hashmap::MoveInit;
+    use crate::entries::IntoHashmap;
     use crate::hashmap::mappers::Mappers;
 
     #[test]
@@ -120,7 +120,8 @@ mod hashmap_mappers_tests {
 
 #[cfg(test)]
 mod hashmap_mappers_func_tests {
-    use crate::hashmap::{MoveInit, iterate, iterate_value, mapper, mapper_value};
+    use crate::entries::IntoHashmap;
+    use crate::hashmap::{iterate, iterate_value, mapper, mapper_value};
 
     #[test]
     fn test_mapper() {

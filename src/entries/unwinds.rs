@@ -15,7 +15,7 @@ pub fn unwind<K, V, KVS>(kvs: KVS) -> (Vec<K>, Vec<V>) where
 
 #[cfg(test)]
 mod test {
-    use crate::hashmap::MoveInit;
+    use crate::entries::IntoHashmap;
 
     use super::*;
 
@@ -61,8 +61,6 @@ mod test {
 
 #[cfg(test)]
 mod prototype_tests {
-    use super::*;
-
     #[test]
     fn test_move_unwind() {
         let tuples = vec![
