@@ -10,7 +10,6 @@ pub trait Mappers<R>: IntoIterator<Item=R>
     fn mapper<P, F>(self, mut f: F) -> Matrix<P> where
         Self: Sized,
         F: FnMut(R::Item) -> P,
-    // F: FnMut(<R as IntoIterator>::Item) -> P,
     {
         self.into_iter().map(
             |row| row.into_iter().map(

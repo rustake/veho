@@ -4,13 +4,14 @@ pub use mappers::{indexed_iterate,
                   indexed_mapper, iterate,
                   mapper, Mappers};
 pub use mutaters::{indexed_mutate, mutate, Mutaters};
-pub use transposes::transpose;
+pub use utils::{size, transpose, Utils};
 pub use zippers::{quazipper, trizipper, zipper};
+
 
 mod alias;
 mod inits;
 mod mappers;
 mod zippers;
 mod mutaters;
-mod transposes;
+mod utils;
 
