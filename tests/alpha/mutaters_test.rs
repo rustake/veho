@@ -1,5 +1,3 @@
-use std::slice::IterMut;
-
 use veho::matrix::Matrix;
 
 pub fn zipper<RA, RB, MA, MB, T, F>(a: MA, b: MB, mut f: F) -> Matrix<T>
@@ -52,5 +50,4 @@ mod tests_mutaters {
         (&mut mx).mutate(|x| *x += 1);
         println!("{:?}", mx);
     }
-
 }
