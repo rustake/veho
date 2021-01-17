@@ -53,9 +53,9 @@ pub trait Mappers<R>: IntoIterator<Item=R>
 }
 
 
-impl<R, M: ?Sized> Mappers<R> for M where
+impl<R, M> Mappers<R> for M where
     R: IntoIterator,
-    M: IntoIterator<Item=R>,
+    M: IntoIterator<Item=R> + ?Sized
 {}
 
 
