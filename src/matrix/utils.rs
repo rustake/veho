@@ -1,5 +1,5 @@
 use crate::matrix::Matrix;
-use crate::vector::Mappers;
+use crate::vector::{Mappers, zipeach};
 
 // pub trait ExactSizeUtils<R>: IntoIterator<Item=R> where
 //     R: IntoIterator
@@ -43,11 +43,11 @@ pub trait Utils<R>: IntoIterator<Item=R> where
     fn lazy_size(self) -> (usize, usize) where
         Self: Sized,
     {
-        let mut iter = self.into_iter();
-        iter.next()
+        let rows = &mut self.into_iter();
+        rows.next()
             .map_or_else(
                 || (0, 0),
-                |row| (iter.count() + 1, row.into_iter().count()),
+                |row| (rows.count() + 1, row.into_iter().count()),
             )
     }
 
@@ -56,19 +56,16 @@ pub trait Utils<R>: IntoIterator<Item=R> where
         Self::IntoIter: Iterator<Item=R>,
         R::IntoIter: Iterator<Item=R::Item>
     {
-        let rows_iterator = &mut self.into_iter();
-        match rows_iterator.next() {
-            None => { vec![] }
-            Some(row) => {
-                let mut columns = row.mapper(|x| vec![x]);
-                rows_iterator.iterate(|row| {
-                    row.indexed_iterate(|i, x| {
-                        columns[i].push(x)
-                    })
-                });
-                columns
-            }
-        }
+        let rows = &mut self.into_iter();
+        rows.next().map_or_else(
+            || vec![],
+            |init| {
+                let mut cols = init.mapper(|x| vec![x]);
+                for row in rows {
+                    zipeach(&mut cols, row, |col, x| { col.push(x) })
+                }
+                cols
+            })
     }
 }
 

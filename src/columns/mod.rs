@@ -5,3 +5,4 @@ pub mod reference;
 
 mod mapper;
 mod getters;
+mod setters;
