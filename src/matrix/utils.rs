@@ -36,24 +36,19 @@ pub trait Utils<R>: IntoIterator<Item=R> where
     {
         let rows = &mut self.into_iter();
         let height = rows.len();
-        match rows.next() {
-            None => { (height, 0) }
-            Some(row) => { (height, row.into_iter().len()) }
-        }
+        let width = rows.next().map_or(0, |row| row.into_iter().len());
+        (height, width)
     }
 
     fn lazy_size(self) -> (usize, usize) where
         Self: Sized,
     {
-        let rows_iterator = &mut self.into_iter();
-        match rows_iterator.next() {
-            None => { (0, 0) }
-            Some(row) => {
-                let width = row.into_iter().count();
-                let rest_height = rows_iterator.count();
-                return (1 + rest_height, width);
-            }
-        }
+        let mut iter = self.into_iter();
+        iter.next()
+            .map_or_else(
+                || (0, 0),
+                |row| (iter.count() + 1, row.into_iter().count()),
+            )
     }
 
     fn transpose(self) -> Matrix<R::Item> where

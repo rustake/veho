@@ -4,7 +4,7 @@ pub use mappers::{indexed_iterate,
                   indexed_mapper, iterate,
                   mapper, Mappers};
 pub use mutaters::{indexed_mutate, mutate, Mutaters};
-pub use reduces::{map_reduce, reduce, Reduces};
+pub use reduces::{mapreduce, reduce, Reduces};
 pub use utils::{size, transpose, Utils};
 pub use zippers::{quazipper, trizipper, zipper};
 

@@ -7,9 +7,11 @@ pub trait Reduces: IntoIterator {
     {
         let mut iter = self.into_iter();
         iter.next().map(|ini| iter.fold(ini, sequence))
+        // let ini = iter.next()?;
+        // Some(iter.fold(ini, sequence))
     }
 
-    fn map_reduce<T, J, F>(self, mut indicator: J, mut sequence: F) -> Option<T>
+    fn mapreduce<T, J, F>(self, mut indicator: J, mut sequence: F) -> Option<T>
         where
             Self: Sized,
             Self::IntoIter: Iterator<Item=Self::Item>,
@@ -35,14 +37,14 @@ pub fn reduce<I, F>(vec: I, sequence: F) -> Option<I::Item>
         F: FnMut(I::Item, I::Item) -> I::Item
 { vec.reduce(sequence) }
 
-pub fn map_reduce<I, T, J, F>(vec: I, indicator: J, sequence: F) -> Option<T>
+pub fn mapreduce<I, T, J, F>(vec: I, indicator: J, sequence: F) -> Option<T>
     where
         I: IntoIterator,
         I: Sized,
         I::IntoIter: Iterator<Item=I::Item>,
         J: FnMut(I::Item) -> T,
         F: FnMut(T, T) -> T
-{ vec.map_reduce(indicator, sequence) }
+{ vec.mapreduce(indicator, sequence) }
 
 #[cfg(test)]
 mod tests {
@@ -60,7 +62,7 @@ mod tests {
     #[test]
     fn test_map_reduce() {
         let vec = vec!["fo", "bar", "zene"];
-        let some = vec.map_reduce(
+        let some = vec.mapreduce(
             |x| x.len(),
             |a, b| max(a, b),
         );
