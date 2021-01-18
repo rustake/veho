@@ -6,7 +6,7 @@ pub use mappers::{indexed_iterate,
 pub use mutaters::{indexed_mutate, mutate, Mutaters};
 pub use reduces::{mapreduce, reduce, Reduces};
 pub use utils::{size, transpose, Utils};
-pub use zippers::{quazipper, trizipper, zipper};
+pub use zippers::{quazipeach, quazipper, trizipeach, trizipper, zipeach, zipper};
 
 mod alias;
 mod inits;

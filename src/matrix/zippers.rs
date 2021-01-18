@@ -1,4 +1,5 @@
 use crate::matrix::Matrix;
+use crate::vector::{quazipeach as zipeach4, quazipper as zipper4, trizipeach as zipeach3, trizipper as zipper3};
 
 pub fn zipper<RA, RB, MA, MB, T, F>(a: MA, b: MB, mut f: F) -> Matrix<T>
     where RA: IntoIterator,
@@ -25,9 +26,7 @@ pub fn trizipper<RA, RB, RC, MA, MB, MC, T, F>(a: MA, b: MB, c: MC, mut f: F) ->
 {
     a.into_iter().zip(b).zip(c)
         .map(
-            |((ra, rb), rc)| ra.into_iter().zip(rb).zip(rc).map(
-                |((a, b), c)| f(a, b, c)
-            ).collect::<Vec<T>>()
+            |((ra, rb), rc)| zipper3(ra, rb, rc, &mut f)
         ).collect::<Matrix<T>>()
 }
 
@@ -43,16 +42,60 @@ pub fn quazipper<RA, RB, RC, RD, MA, MB, MC, MD, T, F>(a: MA, b: MB, c: MC, d: M
           F: FnMut(RA::Item, RB::Item, RC::Item, RD::Item) -> T
 {
     a.into_iter().zip(b).zip(c).zip(d)
-        .map(|(((ra, rb), rc), rd)|
-            ra.into_iter().zip(rb).zip(rc).zip(rd).map(
-                |(((a, b), c), d)| f(a, b, c, d)
-            ).collect::<Vec<T>>()
+        .map(
+            |(((ra, rb), rc), rd)| zipper4(ra, rb, rc, rd, &mut f)
         ).collect::<Matrix<T>>()
+}
+
+pub fn zipeach<RA, RB, MA, MB, T, F>(a: MA, b: MB, mut f: F)
+    where RA: IntoIterator,
+          RB: IntoIterator,
+          MA: IntoIterator<Item=RA>,
+          MB: IntoIterator<Item=RB>,
+          F: FnMut(RA::Item, RB::Item)
+{
+    a.into_iter().zip(b).for_each(
+        |(ra, rb)| ra.into_iter().zip(rb).for_each(
+            |(a, b)| f(a, b)
+        )
+    )
+}
+
+pub fn trizipeach<RA, RB, RC, MA, MB, MC, T, F>(a: MA, b: MB, c: MC, mut f: F)
+    where RA: IntoIterator,
+          RB: IntoIterator,
+          RC: IntoIterator,
+          MA: IntoIterator<Item=RA>,
+          MB: IntoIterator<Item=RB>,
+          MC: IntoIterator<Item=RC>,
+          F: FnMut(RA::Item, RB::Item, RC::Item)
+{
+    a.into_iter().zip(b).zip(c)
+        .for_each(
+            |((ra, rb), rc)| zipeach3(ra, rb, rc, &mut f)
+        )
+}
+
+pub fn quazipeach<RA, RB, RC, RD, MA, MB, MC, MD, T, F>(a: MA, b: MB, c: MC, d: MD, mut f: F)
+    where RA: IntoIterator,
+          RB: IntoIterator,
+          RC: IntoIterator,
+          RD: IntoIterator,
+          MA: IntoIterator<Item=RA>,
+          MB: IntoIterator<Item=RB>,
+          MC: IntoIterator<Item=RC>,
+          MD: IntoIterator<Item=RD>,
+          F: FnMut(RA::Item, RB::Item, RC::Item, RD::Item)
+{
+    a.into_iter().zip(b).zip(c).zip(d)
+        .for_each(
+            |(((ra, rb), rc), rd)| zipeach4(ra, rb, rc, rd, &mut f)
+        )
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::zippers::{zipper, trizipper, quazipper};
+    use crate::matrix::zippers::{quazipper, trizipper, zipper};
 
     #[test]
     fn test_duo_zipper() {

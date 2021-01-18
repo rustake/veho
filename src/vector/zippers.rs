@@ -31,9 +31,39 @@ pub fn quazipper<A, B, C, D, T, F>(a: A, b: B, c: C, d: D, mut f: F) -> Vec<T>
         .collect::<Vec<T>>()
 }
 
+pub fn zipeach<A, B, F>(a: A, b: B, mut f: F)
+    where A: IntoIterator,
+          B: IntoIterator,
+          F: FnMut(A::Item, B::Item)
+{
+    a.into_iter().zip(b)
+        .for_each(|(a, b)| f(a, b))
+}
+
+pub fn trizipeach<A, B, C, F>(a: A, b: B, c: C, mut f: F)
+    where A: IntoIterator,
+          B: IntoIterator,
+          C: IntoIterator,
+          F: FnMut(A::Item, B::Item, C::Item)
+{
+    a.into_iter().zip(b).zip(c)
+        .for_each(|((a, b), c)| f(a, b, c))
+}
+
+pub fn quazipeach<A, B, C, D, F>(a: A, b: B, c: C, d: D, mut f: F)
+    where A: IntoIterator,
+          B: IntoIterator,
+          C: IntoIterator,
+          D: IntoIterator,
+          F: FnMut(A::Item, B::Item, C::Item, D::Item)
+{
+    a.into_iter().zip(b).zip(c).zip(d)
+        .for_each(|(((a, b), c), d)| f(a, b, c, d))
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::vector::{zipper, trizipper, quazipper};
+    use crate::vector::{quazipper, trizipper, zipper};
 
     #[test]
     fn test_duo_zipper() {
