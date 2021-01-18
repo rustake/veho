@@ -1,31 +1,6 @@
 use crate::matrix::Matrix;
 use crate::vector::{Mappers, zipeach};
 
-// pub trait ExactSizeUtils<R>: IntoIterator<Item=R> where
-//     R: IntoIterator
-// {
-//     fn get_size(self) -> (usize, usize) where
-//         Self: Sized,
-//     {
-//         let height = (&self).len();
-//
-//         match self {
-//             None => { (height, 0) }
-//             Some(row) => {
-//
-//                 // let column_into_iter = &mut row.into_iter();
-//                 let width = row.
-//                 return (height, width);
-//             }
-//         }
-//     }
-// }
-//
-// impl<R, M> ExactSizeUtils<R, M> for M where
-//     M: ExactSizeIterator<Item=R>,
-//     R: ExactSizeIterator,
-// {}
-
 pub trait Utils<R>: IntoIterator<Item=R> where
     R: IntoIterator
 {
