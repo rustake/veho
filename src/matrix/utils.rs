@@ -1,5 +1,5 @@
 use crate::matrix::Matrix;
-use crate::vector::{Mappers, zipeach};
+use crate::vector::Mappers;
 
 pub trait Utils<R>: IntoIterator<Item=R> where
     R: IntoIterator
@@ -28,20 +28,33 @@ pub trait Utils<R>: IntoIterator<Item=R> where
 
     fn transpose(self) -> Matrix<R::Item> where
         Self: Sized,
-        Self::IntoIter: Iterator<Item=R>,
-        R::IntoIter: Iterator<Item=R::Item>
+        R::IntoIter: ExactSizeIterator<Item=R::Item>,
     {
-        let rows = &mut self.into_iter();
-        rows.next().map_or_else(
-            || vec![],
-            |init| {
-                let mut cols = init.mapper(|x| vec![x]);
-                for row in rows {
-                    zipeach(&mut cols, row, |col, x| { col.push(x) })
-                }
-                cols
-            })
+        let mut iters = (&mut self.into_iter())
+            .map(|row| row.into_iter())
+            .collect::<Vec<R::IntoIter>>();
+        let width = iters.first().map_or(0, |iter| iter.len());
+        (0..width).map(|_| {
+            (&mut iters).mapper(|it| it.next().unwrap())
+        }).collect::<Matrix<R::Item>>()
     }
+
+    // fn transpose(self) -> Matrix<R::Item> where
+    //     Self: Sized,
+    //     Self::IntoIter: Iterator<Item=R>,
+    //     R::IntoIter: Iterator<Item=R::Item>
+    // {
+    //     let rows = &mut self.into_iter();
+    //     rows.next().map_or_else(
+    //         || vec![],
+    //         |init| {
+    //             let mut cols = init.mapper(|x| vec![x]);
+    //             for row in rows {
+    //                 zipeach(&mut cols, row, |col, x| { col.push(x) })
+    //             }
+    //             cols
+    //         })
+    // }
 }
 
 impl<R, M> Utils<R> for M where
@@ -59,9 +72,15 @@ pub fn size<M, R>(mx: M) -> (usize, usize) where
 pub fn transpose<M, R>(mx: M) -> Matrix<R::Item> where
     M: IntoIterator<Item=R>,
     R: IntoIterator,
-    M::IntoIter: Iterator<Item=R>,
-    R::IntoIter: Iterator<Item=R::Item>
+    R::IntoIter: ExactSizeIterator<Item=R::Item>
 { mx.transpose() }
+
+// pub fn transpose<M, R>(mx: M) -> Matrix<R::Item> where
+//     M: IntoIterator<Item=R>,
+//     R: IntoIterator,
+//     M::IntoIter: Iterator<Item=R>,
+//     R::IntoIter: Iterator<Item=R::Item>
+// { mx.transpose() }
 
 #[cfg(test)]
 mod transpose_tests {

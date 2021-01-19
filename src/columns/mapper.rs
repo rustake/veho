@@ -6,6 +6,7 @@ pub trait Mappers<R>: IntoIterator<Item=R>
 {
     fn mapper<P, F>(self, mut f: F) -> Vec<P> where
         Self: Sized,
+        R::IntoIter: ExactSizeIterator<Item=R::Item>,
         F: FnMut(Vec<R::Item>) -> P
     { mapper_vector(self.transpose(), |col| f(col)) }
 }
@@ -18,6 +19,7 @@ impl<R, M> Mappers<R> for M where
 pub fn mapper<R, M, F, P>(matrix: M, f: F) -> Vec<P> where
     M: IntoIterator<Item=R>,
     R: IntoIterator,
+    R::IntoIter: ExactSizeIterator<Item=R::Item>,
     F: FnMut(Vec<R::Item>) -> P
 { matrix.mapper(f) }
 
