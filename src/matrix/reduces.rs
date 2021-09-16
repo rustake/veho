@@ -1,7 +1,8 @@
 use crate::vector::{
-    mapflat as mapreduce_vector,
-    mapreduce as mapinject_vector,
-    reduce as reduce_vector};
+    mapflat as mapflat_vector,
+    mapreduce as mapreduce_vector,
+    reduce as reduce_vector,
+};
 
 pub trait Reduces<R>: IntoIterator<Item=R>
     where R: IntoIterator
@@ -19,7 +20,7 @@ pub trait Reduces<R>: IntoIterator<Item=R>
         R::IntoIter: Iterator<Item=R::Item>,
         J: FnMut(R::Item) -> T,
         F: FnMut(T, R::Item) -> T,
-    { mapreduce_vector(self.into_iter().flatten(), indicator, sequence) }
+    { mapflat_vector(self.into_iter().flatten(), indicator, sequence) }
 
     fn mapreduce<T, J, F>(self, indicator: J, sequence: F) -> Option<T> where
         Self: Sized,
@@ -27,7 +28,7 @@ pub trait Reduces<R>: IntoIterator<Item=R>
         R::IntoIter: Iterator<Item=R::Item>,
         J: FnMut(R::Item) -> T,
         F: FnMut(T, T) -> T,
-    { mapinject_vector(self.into_iter().flatten(), indicator, sequence) }
+    { mapreduce_vector(self.into_iter().flatten(), indicator, sequence) }
 }
 
 impl<R, M> Reduces<R> for M where
@@ -50,7 +51,7 @@ pub fn mapflat<R, M, T, J, F>(matrix: M, indicator: J, sequence: F) -> Option<T>
     R::IntoIter: Iterator<Item=R::Item>,
     J: FnMut(R::Item) -> T,
     F: FnMut(T, R::Item) -> T,
-{ mapreduce_vector(matrix.into_iter().flatten(), indicator, sequence) }
+{ mapflat_vector(matrix.into_iter().flatten(), indicator, sequence) }
 
 pub fn mapreduce<R, M, T, J, F>(matrix: M, indicator: J, sequence: F) -> Option<T> where
     M: IntoIterator<Item=R>,
@@ -59,7 +60,7 @@ pub fn mapreduce<R, M, T, J, F>(matrix: M, indicator: J, sequence: F) -> Option<
     R::IntoIter: Iterator<Item=R::Item>,
     J: FnMut(R::Item) -> T,
     F: FnMut(T, T) -> T,
-{ mapinject_vector(matrix.into_iter().flatten(), indicator, sequence) }
+{ mapreduce_vector(matrix.into_iter().flatten(), indicator, sequence) }
 
 #[cfg(test)]
 mod tests {
@@ -72,7 +73,7 @@ mod tests {
         let sample = vec![
             vec![4, 2, 7],
             vec![7, 5, 9],
-            vec![3, 0, 4]
+            vec![3, 0, 4],
         ];
         let result = sample.reduce(|a, b| max(a, b));
         println!("{}", result.unwrap());
