@@ -94,7 +94,7 @@ mod tests_mappers {
         let mx = vec![
             vec![1, 1, 1],
             vec![2, 2, 2],
-            vec![3, 3, 3]
+            vec![3, 3, 3],
         ];
         let result = (&mx).mapper(|x| x + 1);
         println!("{:?}", result);
@@ -105,7 +105,7 @@ mod tests_mappers {
         let mut mx = vec![
             vec![1, 1, 1],
             vec![2, 2, 2],
-            vec![3, 3, 3]
+            vec![3, 3, 3],
         ];
         let result = (&mut mx).iterate(|x| {
             *x += 1;
@@ -120,11 +120,11 @@ mod tests_mappers {
         let mut mx = vec![
             vec![1, 1, 1],
             vec![2, 2, 2],
-            vec![3, 3, 3]
+            vec![3, 3, 3],
         ];
         let mut text = "_".to_owned();
         (&mut mx).iterate(|x| {
-            &mut text.push_str(&format!("#{:0>6X}", x));
+            let _ = &mut text.push_str(&format!("#{:0>6X}", x));
             *x += 1
         });
         println!("{:?}", mx);
@@ -135,7 +135,7 @@ mod tests_mappers {
         let mx = vec![
             vec![1, 1, 1],
             vec![2, 2, 2],
-            vec![3, 3, 3]
+            vec![3, 3, 3],
         ];
         let result = mx.indexed_mapper(|i, j, x| (i, j, x));
         println!("{:?}", result);
@@ -146,7 +146,7 @@ mod tests_mappers {
         let mx = vec![
             vec![1, 1, 1],
             vec![2, 2, 2],
-            vec![3, 3, 3]
+            vec![3, 3, 3],
         ];
         mx.indexed_iterate(|i, j, x| print!("({}, {}) [{}], ", i, j, x + 1));
     }

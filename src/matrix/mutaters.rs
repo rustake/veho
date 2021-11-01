@@ -11,7 +11,7 @@ pub trait Mutaters<'a, R>: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>>
     {
         for row in &mut self.into_iter() {
             for x in &mut row.into_iter() {
-                &f(&mut *x);
+                let _ = &f(&mut *x);
             }
         }
     }
@@ -23,7 +23,7 @@ pub trait Mutaters<'a, R>: IntoIterator<Item=&'a mut R, IntoIter=IterMut<'a, R>>
     {
         for (i, row) in &mut self.into_iter().enumerate() {
             for (j, x) in &mut row.into_iter().enumerate() {
-                &f(i, j, &mut *x);
+                let _ = &f(i, j, &mut *x);
             }
         }
     }
@@ -58,7 +58,7 @@ mod tests_mutaters {
         let mut mx = vec![
             vec![1, 1, 1],
             vec![2, 2, 2],
-            vec![3, 3, 3]
+            vec![3, 3, 3],
         ];
         // let f: fn(&mut i32) = |x| *x += 1;
         (&mut mx).mutate(|x| *x += 1);
@@ -70,7 +70,7 @@ mod tests_mutaters {
         let mut mx = vec![
             vec![1, 1, 1],
             vec![2, 2, 2],
-            vec![3, 3, 3]
+            vec![3, 3, 3],
         ];
         // let f: fn(&mut i32) = |x| *x += 1;
         (&mut mx).indexed_mutate(|i, j, x| *x += (i + j) as i32);
@@ -82,7 +82,7 @@ mod tests_mutaters {
         let mut mx = vec![
             vec![1, 1, 1],
             vec![2, 2, 2],
-            vec![3, 3, 3]
+            vec![3, 3, 3],
         ];
         // let f: fn(&mut i32) = |x| *x += 1;
         mutate(&mut mx, |x| *x += 1);

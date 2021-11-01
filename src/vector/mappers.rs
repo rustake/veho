@@ -14,7 +14,7 @@ pub trait Mappers: IntoIterator {
     fn mutate<'a, T: 'a, F>(self, mut f: F) where
         Self: IntoIterator<Item=&'a mut T, IntoIter=IterMut<'a, T>> + Sized,
         F: FnMut(&mut T) -> ()
-    { for x in &mut self.into_iter() { &f(&mut *x); } }
+    { for x in &mut self.into_iter() { let _ = &f(&mut *x); } }
 
     fn indexed_mapper<F, T>(self, mut f: F) -> Vec<T> where
         Self: Sized,
@@ -29,7 +29,7 @@ pub trait Mappers: IntoIterator {
     fn indexed_mutate<'a, T: 'a, F>(self, mut f: F) where
         Self: IntoIterator<Item=&'a mut T, IntoIter=IterMut<'a, T>> + Sized,
         F: FnMut(usize, &mut T) -> ()
-    { for (i, x) in &mut self.into_iter().enumerate() { &f(i, &mut *x); } }
+    { for (i, x) in &mut self.into_iter().enumerate() { let _ = &f(i, &mut *x); } }
 }
 
 impl<T: ?Sized> Mappers for T where T: IntoIterator {}
@@ -91,7 +91,7 @@ mod mappers_tests {
         let mut text = "_".to_owned();
         let vec = vec![1, 2, 3];
         vec.iterate(|x| {
-            &mut text.push_str(&x.to_string());
+            let _ = &mut text.push_str(&x.to_string());
             println!("{}", x + 1)
         });
         println!("{}", text);
