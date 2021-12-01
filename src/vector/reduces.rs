@@ -78,7 +78,7 @@ mod tests {
     fn test() {
         let vec = vec![1, 7, 4, 1];
         let some = vec.reduce(|a, b| max(a, b));
-        println!("{}", some.unwrap());
+        println!(">> {}", some.unwrap());
         // println!("original: vec = {:?}", vec); // error: vec has been consumed
     }
 
@@ -89,6 +89,6 @@ mod tests {
             |x| x.len(),
             |a, b| max(a, b.len()),
         );
-        println!("{}", some.unwrap());
+        println!(">> {}", some.unwrap());
     }
 }

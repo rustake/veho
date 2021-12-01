@@ -32,15 +32,15 @@ mod tests {
         let years = vec!["2004", "1984", "1964"].mapper(|x| x.to_string());
         let year_label = "1984";
         let year_index = years.iter().index_of(&year_label.to_string());
-        println!("years.index_of( {} ) = {}", year_label, to_isize(year_index));
+        println!(">> years.index_of( {} ) = {}", year_label, to_isize(year_index));
 
         let year_label = "2024";
         let year_index = index_of(years.iter(), &year_label.to_string());
-        println!("years.index_of( {} ) = {}", year_label, to_isize(year_index));
+        println!(">> years.index_of( {} ) = {}", year_label, to_isize(year_index));
 
         let words = vec!["foo", "bar", "zen"].mapper(|x| x.to_string());
         let word_label = "voo";
         let word_index = words.iter().index_of(&word_label.to_string());
-        println!("years.index_of( {} ) = {}", word_label, to_isize(word_index));
+        println!(">> years.index_of( {} ) = {}", word_label, to_isize(word_index));
     }
 }

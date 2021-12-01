@@ -73,11 +73,11 @@ mod mappers_tests {
     #[test]
     fn test_mapper() {
         let original: Vec<i32> = vec![1, 2, 3];
-        println!("original: vec = {:?}", original);
+        println!(">> [original] {:?}", original);
         let mapped = (&original).mapper(|x| x + 1);
         // let vec = mapper(vec.iter().into_iter(), |x| x + 1);
-        println!("modified: vec = {:?}", mapped);
-        println!("original: vec = {:?}", original);
+        println!(">> [modified] {:?}", mapped);
+        println!(">> [original] {:?}", original);
     }
 
     #[test]
@@ -101,24 +101,24 @@ mod mappers_tests {
     fn test_iterate_mutate() {
         let mut vec = vec![1, 2, 3];
         (&mut vec).iterate(|x| *x += 1);
-        println!("modified: vec = {:?}", vec);
+        println!(">> modified: vec = {:?}", vec);
     }
 
     #[test]
     fn test_mutate() {
         let mut vec = vec![1, 2, 3];
-        println!("original: vec = {:?}", vec);
+        println!(">> original: vec = {:?}", vec);
         (&mut vec).mutate(|x| *x *= 2);
-        println!("modified: vec = {:?}", vec);
+        println!(">> modified: vec = {:?}", vec);
     }
 
     #[test]
     fn test_mapper_func() {
         let vec = [1, 2, 3];
-        println!("original: vec = {:?}", vec);
+        println!(">> original: vec = {:?}", vec);
         let vec2 = mapper(&vec, |x| x + 1);
-        println!("modified: vec2 = {:?}", vec2);
-        println!("original: vec = {:?}", vec);
+        println!(">> modified: vec2 = {:?}", vec2);
+        println!(">> original: vec = {:?}", vec);
     }
 
     #[test]
@@ -130,9 +130,9 @@ mod mappers_tests {
     #[test]
     fn test_mutate_func() {
         let mut vec = vec![1, 2, 3];
-        println!("original: vec = {:?}", vec);
+        println!(">> original: vec = {:?}", vec);
         mutate(&mut vec, |x| *x *= 2);
-        println!("modified: vec = {:?}", vec);
+        println!(">> modified: vec = {:?}", vec);
     }
 }
 
@@ -143,10 +143,10 @@ mod indexed_mappers_tests {
     #[test]
     fn test_mapper() {
         let vec = vec![1, 2, 3];
-        println!("original: vec = {:?}", vec);
+        println!(">> original: vec = {:?}", vec);
         let vec = vec.indexed_mapper(|i, x| x + i);
         // let vec = mapper(vec.iter().into_iter(), |x| x + 1);
-        println!("modified: vec = {:?}", vec);
+        println!(">> modified: vec = {:?}", vec);
     }
 
     #[test]
@@ -158,9 +158,9 @@ mod indexed_mappers_tests {
     #[test]
     fn test_mutate() {
         let mut vec = vec![1, 2, 3];
-        println!("original: vec = {:?}", vec);
+        println!(">> original: vec = {:?}", vec);
         (&mut vec).indexed_mutate(|i, x| *x *= i);
-        println!("modified: vec = {:?}", vec);
+        println!(">> modified: vec = {:?}", vec);
     }
 }
 
@@ -171,9 +171,9 @@ mod indexed_mappers_func_tests {
     #[test]
     fn test_mapper() {
         let vec = [1, 2, 3];
-        println!("original: vec = {:?}", vec);
+        println!(">> original: vec = {:?}", vec);
         let vec = indexed_mapper(&vec, |i, x| x + i as i32);
-        println!("modified: vec = {:?}", vec);
+        println!(">> modified: vec = {:?}", vec);
     }
 
     #[test]
@@ -185,8 +185,8 @@ mod indexed_mappers_func_tests {
     #[test]
     fn test_mutate() {
         let mut vec = vec![1, 2, 3];
-        println!("original: vec = {:?}", vec);
+        println!(">> original: vec = {:?}", vec);
         indexed_mutate(&mut vec, |i, x| *x *= i * 2);
-        println!("modified: vec = {:?}", vec);
+        println!(">> modified: vec = {:?}", vec);
     }
 }
