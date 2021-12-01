@@ -87,34 +87,34 @@ mod hashmap_mappers_tests {
     #[test]
     fn test_mapper() {
         let alpha = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
-        println!("alpha = {:?}", alpha);
+        println!(">> alpha = {:?}", alpha);
         let beta = (&alpha).mapper(|k, v| (k, v + 1));
-        println!("beta = {:?}", beta);
-        println!("alpha = {:?}", alpha);
+        println!(">> beta = {:?}", beta);
+        println!(">> alpha = {:?}", alpha);
     }
 
     #[test]
     fn test_iterate_mutate() {
         let mut dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
         (&mut dict).iterate(|_, v| { *v += 1; });
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
     }
 
     #[test]
     fn test_mapper_value() {
         let dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
         let dict = dict.mapper_value(|v| v + 1);
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
     }
 
     #[test]
     fn test_iterate_value() {
         let mut dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
         (&mut dict).iterate_value(|v| { *v += 1; });
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
     }
 }
 
@@ -126,33 +126,33 @@ mod hashmap_mappers_func_tests {
     #[test]
     fn test_mapper() {
         let alpha = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
-        println!("alpha = {:?}", alpha);
+        println!(">> alpha = {:?}", alpha);
         let beta = mapper(&alpha, |k, v| (k, v + 1));
-        println!("beta = {:?}", beta);
-        println!("alpha = {:?}", alpha);
+        println!(">> beta = {:?}", beta);
+        println!(">> alpha = {:?}", alpha);
     }
 
     #[test]
     fn test_iterate_mutate() {
         let mut dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
         iterate(&mut dict, |_, v| { *v += 1; });
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
     }
 
     #[test]
     fn test_mapper_value() {
         let dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
         let dict = mapper_value(dict, |v| v + 1);
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
     }
 
     #[test]
     fn test_iterate_value() {
         let mut dict = vec![("foo", 1), ("bar", 2), ("zen", 3)].into_hashmap();
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
         iterate_value(&mut dict, |v| { *v += 1; });
-        println!("{:?}", dict);
+        println!(">> {:?}", dict);
     }
 }

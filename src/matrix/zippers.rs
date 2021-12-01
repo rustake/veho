@@ -110,9 +110,9 @@ mod tests {
             vec![1, 2, 3]
         ];
         let v = zipper(&a, &b, |a, b| a + b);
-        println!("a = {:?}", a);
-        println!("b = {:?}", b);
-        println!("v = {:?}", v);
+        println!(">> a = {:?}", a);
+        println!(">> b = {:?}", b);
+        println!(">> v = {:?}", v);
     }
 
     //
@@ -124,9 +124,9 @@ mod tests {
     //         *a *= b;
     //         return *a;
     //     });
-    //     println!("a = {:?}", a);
-    //     println!("b = {:?}", b);
-    //     println!("v = {:?}", v);
+    //     println!(">> a = {:?}", a);
+    //     println!(">> b = {:?}", b);
+    //     println!(">> v = {:?}", v);
     // }
     #[test]
     fn test_tri_zipper() {
@@ -149,10 +149,10 @@ mod tests {
             *a *= b + c;
             *a
         });
-        println!("a = {:?}", a);
-        println!("b = {:?}", b);
-        println!("c = {:?}", c);
-        println!("v = {:?}", v);
+        println!(">> a = {:?}", a);
+        println!(">> b = {:?}", b);
+        println!(">> c = {:?}", c);
+        println!(">> v = {:?}", v);
     }
 
     #[test]
@@ -164,8 +164,8 @@ mod tests {
         let v = quazipper(&mut a, &b, &c, &d,
                           |xa, xb, xc, xd| *xa += xb * (xc + xd),
         );
-        println!("a = {:?}", a);
-        println!("v = {:?}", v);
+        println!(">> a = {:?}", a);
+        println!(">> v = {:?}", v);
     }
 }
 

@@ -40,8 +40,8 @@ mod test_unwind {
         let tuples = vec![("one", [1]), ("two", [2]), ("three", [3])];
         let alpha = (&tuples).unwind();
         let beta = (&tuples).unwind();
-        println!("{:?}", alpha);
-        println!("{:?}", beta);
+        println!(">> {:?}", alpha);
+        println!(">> {:?}", beta);
     }
 
     #[test]
@@ -49,8 +49,8 @@ mod test_unwind {
         // let tuples = vec![("one", [1]), ("two", [2]), ("three", [3])].into_hashmap();
         // let alpha = (&tuples).unwind();
         // let beta = (&tuples).unwind();
-        // println!("{:?}", alpha);
-        // println!("{:?}", beta);
+        // println!(">> {:?}", alpha);
+        // println!(">> {:?}", beta);
     }
 }
 
@@ -63,9 +63,9 @@ mod test_clone_unwind {
         let tuples = vec![("one", [1]), ("two", [2]), ("three", [3])];
         let beta = (&tuples).clone_unwind();
         let alpha = (&tuples).clone_unwind();
-        println!("{:?}", alpha);
-        println!("{:?}", beta);
-        println!("{:?}", tuples);
+        println!(">> {:?}", alpha);
+        println!(">> {:?}", beta);
+        println!(">> {:?}", tuples);
     }
 
     #[test]
@@ -73,7 +73,7 @@ mod test_clone_unwind {
         let tuples = [("one", [1]), ("two", [2]), ("three", [3])];
         let beta = (&tuples).clone_unwind();
         let alpha = (&tuples).clone_unwind();
-        println!("{:?}", alpha);
-        println!("{:?}", beta);
+        println!(">> {:?}", alpha);
+        println!(">> {:?}", beta);
     }
 }

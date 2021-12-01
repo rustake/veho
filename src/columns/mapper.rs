@@ -31,7 +31,7 @@ mod tests {
     fn test() {
         let matrix = vec![vec![1, 2, 3], vec![1, 2, 3], vec![1, 2, 3]];
         let result = (&matrix).mapper(|col| mapper_vector(col, |x| { x + 1 }));
-        println!("result = {:?}", result);
-        println!("matrix = {:?}", matrix);
+        println!(">> result = {:?}", result);
+        println!(">> matrix = {:?}", matrix);
     }
 }

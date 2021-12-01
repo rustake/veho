@@ -20,7 +20,7 @@ mod tests {
         let keys = vec!["foo", "bar", "zen"];
         let values = vec!["1", "2", "3"];
         let hash_map = wind(keys, values);
-        println!("{:?}", hash_map);
+        println!(">> {:?}", hash_map);
     }
 
     #[test]
@@ -28,7 +28,7 @@ mod tests {
         let keys = vec!["foo", "bar", "zen"].mapper(|x| x.to_owned());
         let values = vec!["1", "2", "3"].mapper(|x| x.to_owned());
         let hash_map = wind(&keys, &values);
-        println!("{:?}", hash_map);
+        println!(">> {:?}", hash_map);
     }
 
     #[test]
@@ -36,7 +36,7 @@ mod tests {
         let keys = ["foo", "bar", "zen"];
         let values = ["1", "2", "3"];
         let hash_map = wind(keys.iter(), values.iter());
-        println!("{:?}", hash_map);
+        println!(">> {:?}", hash_map);
     }
 
     #[test]
@@ -44,6 +44,6 @@ mod tests {
         let keys = ["foo", "bar", "zen"];
         let values = ["1", "2", "3"];
         let hash_map = wind(&keys, &values);
-        println!("{:?}", hash_map);
+        println!(">> {:?}", hash_map);
     }
 }

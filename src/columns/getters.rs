@@ -30,8 +30,8 @@ mod tests {
         let matrix = vec![vec![1, 2, 3], vec![1, 2, 3], vec![1, 2, 3]];
         let column2 = column(&matrix, 2);
         let column0 = column(&matrix, 0);
-        println!("column0 = {:?}", column0);
-        println!("column2 = {:?}", column2);
-        println!("matrix = {:?}", matrix);
+        println!(">> column0 = {:?}", column0);
+        println!(">> column2 = {:?}", column2);
+        println!(">> matrix = {:?}", matrix);
     }
 }

@@ -27,9 +27,9 @@ mod test {
             (3, 30.0),
         ];
         let (a, b) = tuples.unwind();
-        println!("{:?}", a);
-        println!("{:?}", b);
-        // println!("{:?}", tuples);
+        println!(">> {:?}", a);
+        println!(">> {:?}", b);
+        // println!(">> {:?}", tuples);
     }
 
     #[test]
@@ -40,9 +40,9 @@ mod test {
         //     (3, 30.0),
         // ];
         // let (a, b) = (&tuples).unwind();
-        // println!("{:?}", a);
-        // println!("{:?}", b);
-        // println!("{:?}", tuples);
+        // println!(">> {:?}", a);
+        // println!(">> {:?}", b);
+        // println!(">> {:?}", tuples);
     }
 
     #[test]
@@ -53,9 +53,9 @@ mod test {
             (3, 30.0),
         ].into_hashmap();
         let (a, b) = (&tuples).unwind();
-        println!("{:?}", a);
-        println!("{:?}", b);
-        println!("{:?}", tuples);
+        println!(">> {:?}", a);
+        println!(">> {:?}", b);
+        println!(">> {:?}", tuples);
     }
 }
 
@@ -69,8 +69,8 @@ mod prototype_tests {
             (3, [30.0, 0.0]),
         ];
         let (a, b): (Vec<i32>, Vec<[f64; 2]>) = (&tuples).into_iter().map(|(x, y)| (x, y)).unzip();
-        println!("{:?}", a);
-        println!("{:?}", b);
+        println!(">> {:?}", a);
+        println!(">> {:?}", b);
     }
 }
 

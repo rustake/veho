@@ -97,7 +97,7 @@ mod tests_mappers {
             vec![3, 3, 3],
         ];
         let result = (&mx).mapper(|x| x + 1);
-        println!("{:?}", result);
+        println!(">> {:?}", result);
     }
 
     #[test]
@@ -111,8 +111,8 @@ mod tests_mappers {
             *x += 1;
             print!("{}, ", x)
         });
-        println!("{:?}", result);
-        println!("{:?}", mx);
+        println!(">> {:?}", result);
+        println!(">> {:?}", mx);
     }
 
     #[test]
@@ -127,7 +127,7 @@ mod tests_mappers {
             let _ = &mut text.push_str(&format!("#{:0>6X}", x));
             *x += 1
         });
-        println!("{:?}", mx);
+        println!(">> {:?}", mx);
     }
 
     #[test]
@@ -138,7 +138,7 @@ mod tests_mappers {
             vec![3, 3, 3],
         ];
         let result = mx.indexed_mapper(|i, j, x| (i, j, x));
-        println!("{:?}", result);
+        println!(">> {:?}", result);
     }
 
     #[test]
@@ -165,6 +165,6 @@ mod arr_matrix_mappers_tests {
             [3, 3, 3]
         ];
         let result = mx.iter().mapper(|x| *x + 1);
-        println!("{:?}", result);
+        println!(">> {:?}", result);
     }
 }

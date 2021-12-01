@@ -119,7 +119,7 @@ mod transpose_tests {
             let candidates = create_candidates();
             for (name, mx) in &candidates {
                 let result = transpose(mx);
-                println!("{}: {:?} from {:?}", name, result, mx);
+                println!(">> {}: {:?} from {:?}", name, result, mx);
             }
         }
 
@@ -134,7 +134,7 @@ mod transpose_tests {
             ];
             for mx in candidates {
                 let result = transpose(&mx);
-                println!("{:?}", result);
+                println!(">> {:?}", result);
             }
         }
     }
@@ -148,7 +148,7 @@ mod transpose_tests {
             let candidates = create_candidates();
             for (name, mx) in candidates {
                 let result = mx.size();
-                println!("{} {:?}", name, result);
+                println!(">> {} {:?}", name, result);
             }
         }
 
@@ -157,7 +157,7 @@ mod transpose_tests {
             let candidates = create_candidates();
             for (name, mx) in &candidates {
                 let result = mx.lazy_size();
-                println!("{} {:?}", name, result);
+                println!(">> {} {:?}", name, result);
             }
         }
     }

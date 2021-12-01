@@ -45,17 +45,17 @@ mod tests {
     fn test_ref_column() {
         let matrix = vec![vec![1, 2, 3], vec![1, 2, 3], vec![1, 2, 3]];
         let row = &matrix[1];
-        println!("{:?}", row);
+        println!(">> {:?}", row);
         let col = (&matrix).column(1);
-        println!("{:?}", col);
+        println!(">> {:?}", col);
     }
 
     #[test]
     fn test_clone_column() {
         let matrix = vec![vec![1, 2, 3], vec![1, 2, 3], vec![1, 2, 3]];
         let row = &matrix[1];
-        println!("{:?}", row);
+        println!(">> {:?}", row);
         let col = &matrix.clone_column(1);
-        println!("{:?}", col);
+        println!(">> {:?}", col);
     }
 }

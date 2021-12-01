@@ -19,12 +19,12 @@ mod create_matrix_tests {
     #[test]
     fn test_init() {
         let sample_matrix = init(4, 3, |i, j| (i + j) as i32);
-        println!("{:?}", sample_matrix);
+        println!(">> {:?}", sample_matrix);
     }
 
     #[test]
     fn test_iso() {
         let sample_matrix = iso(4, 3, 0);
-        println!("{:?}", sample_matrix);
+        println!(">> {:?}", sample_matrix);
     }
 }

@@ -76,6 +76,6 @@ mod tests {
             vec![3, 0, 4],
         ];
         let result = sample.reduce(|a, b| max(a, b));
-        println!("{}", result.unwrap());
+        println!(">> {}", result.unwrap());
     }
 }

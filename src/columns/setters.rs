@@ -32,8 +32,8 @@ mod tests {
     #[test]
     fn test_push_column() {
         let mut matrix = init(3, 4, |i, j| ((i + 1) * 10 + (j + 1)) as i32);
-        println!("{:?}", &matrix);
+        println!(">> {:?}", &matrix);
         (&mut matrix).push_column(vec![1, 1, 1]);
-        println!("{:?}", &matrix);
+        println!(">> {:?}", &matrix);
     }
 }

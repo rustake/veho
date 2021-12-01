@@ -62,7 +62,7 @@ mod tests_mutaters {
         ];
         // let f: fn(&mut i32) = |x| *x += 1;
         (&mut mx).mutate(|x| *x += 1);
-        println!("{:?}", mx);
+        println!(">> {:?}", mx);
     }
 
     #[test]
@@ -74,7 +74,7 @@ mod tests_mutaters {
         ];
         // let f: fn(&mut i32) = |x| *x += 1;
         (&mut mx).indexed_mutate(|i, j, x| *x += (i + j) as i32);
-        println!("{:?}", mx);
+        println!(">> {:?}", mx);
     }
 
     #[test]
@@ -86,6 +86,6 @@ mod tests_mutaters {
         ];
         // let f: fn(&mut i32) = |x| *x += 1;
         mutate(&mut mx, |x| *x += 1);
-        println!("{:?}", mx);
+        println!(">> {:?}", mx);
     }
 }
