@@ -43,8 +43,9 @@ mod test_clone_to_hashmap {
         let tuples = vec![("one", [1]), ("two", [2]), ("three", [3])];
         let beta = (&tuples).clone_to_hashmap();
         let alpha = (tuples).clone_to_hashmap();
-        println!(">> {:?}", alpha);
-        println!(">> {:?}", beta);
+        println!(">> [alpha] {:?}", alpha);
+        println!(">> [beta] {:?}", beta);
+        println!(">> [tuples] {:?}", tuples);
     }
 
     #[test]
