@@ -1,8 +1,9 @@
 pub use getters::{column, Getters};
-pub use mapper::{mapper, Mappers};
+pub use mapper::{map_columns, Mappers};
+pub use setters::{push_column, Setters};
 
 pub mod reference;
 
-mod mapper;
+pub mod mapper;
 mod getters;
 mod setters;
