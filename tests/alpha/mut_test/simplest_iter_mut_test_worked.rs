@@ -40,7 +40,7 @@ pub fn mutate4<'a, T: 'a, IT, FN>(it: IT, mut f: FN) where
     FN: FnMut(&mut T) -> ()
 {
     for x in &mut it.into_iter() {
-        &f(&mut *x);
+        let _ = &f(&mut *x);
     }
 }
 

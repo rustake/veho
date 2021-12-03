@@ -5,7 +5,7 @@ fn iter_mut_test() {
     let mut matrix = vec![
         vec![1, 1, 1],
         vec![2, 2, 2],
-        vec![3, 3, 3]
+        vec![3, 3, 3],
     ];
     let lambda: fn(&mut i32) -> () = |i| *i += 1;
     matrix.iter_mut().for_each(
@@ -52,7 +52,7 @@ pub fn mutate4<'a, T: 'a, IT, FN>(it: IT, mut f: FN) where
     FN: FnMut(&mut T) -> ()
 {
     for x in &mut it.into_iter() {
-        &f(&mut *x);
+        let _ = &f(&mut *x);
     }
 }
 

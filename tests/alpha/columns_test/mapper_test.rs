@@ -1,5 +1,3 @@
-use std::fmt;
-
 use veho::matrix::{init, Matrix};
 use veho::vector::Mappers;
 

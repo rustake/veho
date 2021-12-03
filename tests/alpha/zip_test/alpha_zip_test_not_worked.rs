@@ -34,7 +34,7 @@ macro_rules! zipper {
     //     $first.into_iter().zip($second).map($func).collect::<Vec<$type>>();
     // };
     ($first:expr, $second:expr $(,)*; $func:expr; $type:ty) => {
-        $first.into_iter().zip($second).map(|(x, y)| $func(x,y)).collect::<Vec<$type>>();
+        $first.into_iter().zip($second).map(|(x, y)| $func(x,y)).collect::<Vec<$type>>()
     };
 }
 
